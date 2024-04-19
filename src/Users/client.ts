@@ -3,24 +3,25 @@ import axios from "axios";
 const axiosWithCredentials = axios.create({
   withCredentials: true,
 });
+const NODE_API = process.env.BASE_API;
 
 export const createUser = async (user: any) => {
   const response = await axiosWithCredentials.post(
-    "http://localhost:4000/api/users",
+    `${NODE_API}/api/users`,
     user
   );
   return response.data;
 };
 export const getUsers = async () => {
   const response = await axiosWithCredentials.get(
-    "http://localhost:4000/api/users"
+    `${NODE_API}/api/users`
   );
   return response.data;
 };
 
 export const updateUser = async (user: any) => {
   const response = await axiosWithCredentials.put(
-    `http://localhost:4000/api/users/${user._id}`,
+    `${NODE_API}/api/users/${user._id}`,
     user
   );
   return response.data;
@@ -28,14 +29,14 @@ export const updateUser = async (user: any) => {
 
 export const deleteUser = async (id: string) => {
   const response = await axiosWithCredentials.delete(
-    `http://localhost:4000/api/users/${id}`
+    `${NODE_API}/api/users/${id}`
   );
   return response.data;
 };
 
 export const registerUser = async (user: any) => {
   const response = await axiosWithCredentials.post(
-    "http://localhost:4000/api/users/register",
+    `${NODE_API}/api/users/register`,
     user
   );
   return response.data;
@@ -43,7 +44,7 @@ export const registerUser = async (user: any) => {
 
 export const loginUser = async (credentials: any) => {
   const response = await axiosWithCredentials.post(
-    "http://localhost:4000/api/users/login",
+    `${NODE_API}/api/users/login`,
     credentials
   );
   return response.data;
@@ -51,14 +52,14 @@ export const loginUser = async (credentials: any) => {
 
 export const profile = async () => {
   const response = await axiosWithCredentials.post(
-    "http://localhost:4000/api/users/profile"
+    `${NODE_API}/api/users/profile`
   );
   return response.data;
 };
 
 export const logout = async () => {
   const response = await axiosWithCredentials.post(
-    "http://localhost:4000/api/users/logout"
+    `${NODE_API}/api/users/logout`
   );
   return response.data;
 };
