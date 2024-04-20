@@ -3,7 +3,7 @@ import axios from "axios";
 const axiosWithCredentials = axios.create({
   withCredentials: true,
 });
-const NODE_API = process.env.BASE_API;
+const NODE_API = process.env.REACT_APP_BASE_API;
 
 // Tracks
 const TRACKS_API = `${NODE_API}/api/tracks`;
