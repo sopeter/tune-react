@@ -3,7 +3,7 @@ import axios from "axios";
 const axiosWithCredentials = axios.create({
   withCredentials: true,
 });
-const NODE_API = process.env.BASE_API;
+const NODE_API = process.env.REACT_APP_BASE_API;
 
 // Tracks
 const TRACKS_API = `${NODE_API}/api/tracks`;
@@ -19,7 +19,7 @@ export const createTrack = async (track: any) => {
 
 export const deleteTrack = async (trackId: any) => {
   const response = await axiosWithCredentials.delete(
-      `TRACKS_API/${trackId}`,
+      `${TRACKS_API}/${trackId}`,
   );
 
   return response.data;
@@ -27,7 +27,7 @@ export const deleteTrack = async (trackId: any) => {
 
 export const updateTrack = async (trackId: any) => {
   const response = await axiosWithCredentials.put(
-      `TRACKS_API/${trackId}`,
+      `${TRACKS_API}/${trackId}`,
   );
 
   return response.data;
@@ -43,11 +43,19 @@ export const getAllTracks = async () => {
 
 export const getTrackById = async (trackId: any) => {
   const response = await axiosWithCredentials.get(
-      `TRACKS_API/${trackId}`,
+      `${TRACKS_API}/${trackId}`
   );
 
   return response.data;
 };
+
+export const getTrackBySpotifyId = async(trackId: any) => {
+  const response = await axiosWithCredentials.get(
+      `${TRACKS_API}/spotify/${trackId}`
+  );
+
+  return response.data;
+}
 
 // Likes
 const LIKES_API = `${NODE_API}/api/likes`;
@@ -76,6 +84,23 @@ export const getAllLikedTracks = async () => {
 
   return response.data
 };
+
+export const areLikedTracks = async (trackIds: any[]) => {
+  const response = await axiosWithCredentials.post(
+      `${LIKES_API}/track/compare`,
+      trackIds
+  );
+
+  return response.data;
+}
+
+export const getLikedPlaylist = async () => {
+  const response = await axiosWithCredentials.get(
+      `${LIKES_API}/likePlaylist`
+  );
+
+  return response.data;
+}
 
 // Social
 const SOCIAL_API = `${NODE_API}/api/social`;

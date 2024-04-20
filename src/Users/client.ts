@@ -3,7 +3,7 @@ import axios from "axios";
 const axiosWithCredentials = axios.create({
   withCredentials: true,
 });
-const NODE_API = process.env.BASE_API;
+const NODE_API = process.env.REACT_APP_BASE_API;
 
 export const createUser = async (user: any) => {
   const response = await axiosWithCredentials.post(
@@ -44,7 +44,7 @@ export const registerUser = async (user: any) => {
 
 export const loginUser = async (credentials: any) => {
   const response = await axiosWithCredentials.post(
-    `${NODE_API}/api/users/login`,
+    `${NODE_API}/api/users/signIn`,
     credentials
   );
   return response.data;

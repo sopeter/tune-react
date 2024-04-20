@@ -16,7 +16,7 @@ export default function Register() {
   const register = async () => {
     try {
       const newUser = await userClient.registerUser(user);
-      navigate("/Tune/Account/Profile");
+      navigate("/Tune/Home");
     } catch (error: any) {
       console.log(error.response.data);
     }

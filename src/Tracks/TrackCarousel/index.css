@@ -1,0 +1,4 @@
+.card-group {
+  overflow-x: auto;
+  white-space: nowrap;
+}
