@@ -20,7 +20,7 @@ function App() {
           <Route path="/Tune/Home" element={<Home />} />
           <Route path="/Tune/Track/:trackId" element={<TrackDetail />} />
           <Route path="/Account/Profile/:uid" element={<Profile />} />
-          <Route path="/Account/Profile/Edit" element={<EditProfile />} />
+          <Route path="/Account/Profile/Edit/:uid" element={<EditProfile />} />
         </Routes>
       </HashRouter>
     </>

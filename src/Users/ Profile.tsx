@@ -4,9 +4,11 @@ import { useParams, useNavigate } from "react-router";
 
 export default function Profile() {
   // TODO: implement Redux
-  const { currentUser } = { currentUser: "a1234124" };
+  const currentUser = { _id: "66243235b36f3bce259d611f"};
   const { uid } = useParams<{ uid: string }>();
   const navigate = useNavigate();
+
+  const isCurrentUser = uid === currentUser._id;
 
   const [profile, setProfile] = useState<any>({});
 
@@ -50,10 +52,10 @@ export default function Profile() {
             </div>
           </div>
           {
-            currentUser &&
+              isCurrentUser &&
               <div className="row">
                 <div className="col">
-                  <button onClick={() => navigate(`/Account/Profile/Edit`)} className="btn btn-primary" type="button">
+                  <button onClick={() => navigate(`/Account/Profile/Edit/${uid}`)} className="btn btn-primary" type="button">
                     Edit Profile
                   </button>
                 </div>

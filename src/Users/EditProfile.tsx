@@ -1,24 +1,26 @@
 import * as client from "./client";
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router";
+import {useEffect, useState} from "react";
+import {useParams, useNavigate} from "react-router";
 
 export default function EditProfile() {
   // TODO: implement Redux
-  const currentUser = { _id: "662400c423ae8cdbf976fd86" };
-  const uid = currentUser._id;
+  const {uid} = useParams<{ uid: string }>();
+  const currentUser = {_id: "66243235b36f3bce259d611f"};
   const navigate = useNavigate();
 
   const [profile, setProfile] = useState<any>({});
   const [isPwHidden, setIsPwHidden] = useState(true);
 
   const fetchProfile = async () => {
-    const profile = await client.profile(uid);
+    const profile = await client.profile(uid!);
     setProfile(profile);
   };
 
+  const isCurrentUser = uid === currentUser._id;
+
   const submitEdit = async () => {
     await client.updateUser(profile);
-    navigate('/')
+    navigate(`/Account/Profile/${uid}`)
   }
 
   useEffect(() => {
@@ -29,7 +31,7 @@ export default function EditProfile() {
       <div>
         <div className="container-fluid align-items-center min-vh-75">
           <h1>Edit Profile</h1>
-          {profile && (
+          {isCurrentUser && (
               <div>
                 <label htmlFor="profile-firstName-form">First Name</label>
                 <input
@@ -38,7 +40,7 @@ export default function EditProfile() {
                     id="profile-firstName-form"
                     value={profile.firstName}
                     onChange={(e) =>
-                        setProfile({ ...profile, firstName: e.target.value })
+                        setProfile({...profile, firstName: e.target.value})
                     }
                 />
                 <label htmlFor="profile-lastName-form">Last Name</label>
@@ -48,7 +50,7 @@ export default function EditProfile() {
                     id="profile-lastName-form"
                     value={profile.lastName}
                     onChange={(e) =>
-                        setProfile({ ...profile, lastName: e.target.value })
+                        setProfile({...profile, lastName: e.target.value})
                     }
                 />
                 <label htmlFor="profile-username-form">Username</label>
@@ -58,7 +60,7 @@ export default function EditProfile() {
                     id="profile-username-form"
                     value={profile.username}
                     onChange={(e) =>
-                        setProfile({ ...profile, username: e.target.value })
+                        setProfile({...profile, username: e.target.value})
                     }
                 />
                 <label htmlFor="profile-password-form">Password</label>
@@ -68,7 +70,7 @@ export default function EditProfile() {
                     id="profile-password-form"
                     value={profile.password}
                     onChange={(e) =>
-                        setProfile({ ...profile, password: e.target.value })
+                        setProfile({...profile, password: e.target.value})
                     }
                 />
 
@@ -83,23 +85,24 @@ export default function EditProfile() {
                     type="email"
                     id="profile-email-form"
                     value={profile.email}
-                    onChange={(e) => setProfile({ ...profile, email: e.target.value })}
+                    onChange={(e) => setProfile({...profile, email: e.target.value})}
                 />
                 <label htmlFor="profile-role-form">Role</label>
                 <select
                     className="form-control"
                     id="profile-role-form"
-                    onChange={(e) => setProfile({ ...profile, role: e.target.value })}
+                    onChange={(e) => setProfile({...profile, role: e.target.value})}
                 >
                   <option value="USER">User</option>
                   <option value="ADMIN">Admin</option>
                   <option value="ARTIST">Artist</option>
                 </select>
+
+                <button className="btn btn-primary w-100 me-2" type="button" onClick={submitEdit}>
+                  Save
+                </button>
               </div>
           )}
-          <button className="btn btn-primary w-100 me-2" type="button" onClick={submitEdit}>
-            Save
-          </button>
         </div>
       </div>
   );
