@@ -1,4 +1,4 @@
-import TrackDisplay from "../TrackDisplay";
+import TrackDisplayCard from "../TrackDisplayCard";
 import {useEffect, useState} from "react";
 import * as spotifyClient from "../../Spotify/client";
 import * as tuneClient from "../../Tune/client";
@@ -22,7 +22,7 @@ export default function TrackDetail() {
 
   return (
       <div className="d-flex container py-4">
-        {track && <TrackDisplay track={track} liked={isLiked}/>}
+        {track && <TrackDisplayCard track={track} liked={isLiked}/>}
         {track && <div className="px-4 col-6">
           <iframe src={`https://open.spotify.com/embed/track/${track.id}?utm_source=generator`}
                   title={track.id}
