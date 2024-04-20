@@ -44,7 +44,7 @@ export const registerUser = async (user: any) => {
 
 export const loginUser = async (credentials: any) => {
   const response = await axiosWithCredentials.post(
-    `${NODE_API}/api/users/login`,
+    `${NODE_API}/api/users/signIn`,
     credentials
   );
   return response.data;

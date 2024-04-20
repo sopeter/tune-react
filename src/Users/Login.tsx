@@ -9,7 +9,7 @@ export default function Login() {
   const login = async () => {
     try {
       const newUser = await userClient.loginUser(user);
-      navigate("/Tune/Account/Profile");
+      navigate("/Tune/Home");
     } catch (error: any) {
       console.log(error.response.data);
     }

@@ -77,6 +77,15 @@ export const getAllLikedTracks = async () => {
   return response.data
 };
 
+export const areLikedTracks = async (trackIds: any[]) => {
+  const response = await axiosWithCredentials.post(
+      `${LIKES_API}/track/compare`,
+      trackIds
+  );
+
+  return response.data
+}
+
 // Social
 const SOCIAL_API = `${NODE_API}/api/social`;
 
