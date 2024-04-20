@@ -13,6 +13,14 @@ export const getTodaysTopHits = async () => {
   return response.data;
 }
 
+export const getWeeklyNewReleases = async () => {
+  const response = await axiosWithCredentials.get(
+      `${NODE_API}/api/spotify/new-releases`
+  );
+
+  return response.data;
+}
+
 export const searchTracks = async (query: String) => {
   const response = await axiosWithCredentials.get(
       `${NODE_API}/api/spotify/search/tracks/${query}`

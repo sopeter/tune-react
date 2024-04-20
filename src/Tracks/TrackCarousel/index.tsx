@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import * as tuneClient from "../../Tune/client";
 import "./index.css"
 
-export default function TrackCarousel({tracks}: {tracks: any[]}) {
+export default function TrackCarousel({tracks, color}: {tracks: any[], color?: string}) {
   const [likedTracks, setLikedTracks] = useState<any[]>([]);
 
   const fetchLikes = async () => {
@@ -20,7 +20,7 @@ export default function TrackCarousel({tracks}: {tracks: any[]}) {
         <ul className="list-group list-group-horizontal">
           {tracks && likedTracks && tracks.map((track: any, i: number) => (
               <li key={track.id} className="list-group-item border-0">
-                <TrackDisplayCard track={track} liked={likedTracks[i]}/>
+                <TrackDisplayCard track={track} liked={likedTracks[i]} color={color}/>
               </li>
           ))}
         </ul>

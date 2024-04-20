@@ -3,7 +3,12 @@ import * as tuneClient from "../../Tune/client";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
-export default function TrackDisplay({track, liked}: { track: any, liked: boolean }) {
+export default function TrackDisplay({track, liked, updateLikes, color='primary'}: {
+  track: any,
+  liked: boolean,
+  updateLikes?: Function,
+  color?: string
+}) {
   const [isLiked, setIsLiked] = useState(false);
   const navigate = useNavigate();
 
@@ -14,11 +19,17 @@ export default function TrackDisplay({track, liked}: { track: any, liked: boolea
   const likeTrack = async (track: any) => {
     await tuneClient.likeTrack(track);
     setIsLiked(true);
+    if (updateLikes) {
+      updateLikes();
+    }
   }
 
   const unlikeTrack = async (track: any) => {
     await tuneClient.unlikeTrack(track.id);
     setIsLiked(false);
+    if (updateLikes) {
+      updateLikes();
+    }
   }
 
   return (
@@ -32,7 +43,7 @@ export default function TrackDisplay({track, liked}: { track: any, liked: boolea
               onClick={() => {
                 isLiked ? unlikeTrack(track) : likeTrack(track);
               }}
-              className="float-end btn text-primary"
+              className={"float-end btn text-" + color}
           >
             {isLiked ? <FaHeart style={{fontSize: "30px"}}/> :
                 <FaRegHeart style={{fontSize: "30px"}}/>}
