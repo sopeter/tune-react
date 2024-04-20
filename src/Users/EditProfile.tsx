@@ -1,6 +1,10 @@
 import * as client from "./client";
 import {useEffect, useState} from "react";
 import {useParams, useNavigate} from "react-router";
+import {
+  BsEyeFill,
+  BsEyeSlashFill
+} from "react-icons/bs"
 
 export default function EditProfile() {
   // TODO: implement Redux
@@ -75,8 +79,7 @@ export default function EditProfile() {
                 />
 
                 <button onClick={() => setIsPwHidden(!isPwHidden)}>
-                  {/*FA EYE ICON*/}
-                  {isPwHidden ? "Show Password" : "Hide Password"}
+                  {isPwHidden ? <BsEyeFill/> : <BsEyeSlashFill/>}
                 </button>
                 <br/>
                 <label htmlFor="profile-email-form">Email</label>
