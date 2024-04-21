@@ -5,7 +5,6 @@ import {UserState} from "../Store";
 
 export default function Navigation() {
   const user = useSelector((state: UserState) => state.userReducer.user);
-  console.log(user);
   const {pathname} = useLocation();
   const [currUser, setCurrUser] = useState(user);
   const [path, setPath] = useState(pathname);
