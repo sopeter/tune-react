@@ -1,5 +1,5 @@
 import React from "react";
-import {Routes, Route} from "react-router";
+import {Routes, Route, Navigate} from "react-router";
 import Register from "./Users/Register";
 import Login from "./Users/Login";
 import {HashRouter} from "react-router-dom";
@@ -21,7 +21,7 @@ function App() {
             <HashRouter>
               <Navigation/>
               <Routes>
-                <Route path="/" element={<Login/>}/>
+                <Route path="/" element={<Navigate to="/Tune/Home"/>}/>
                 <Route path="/Account/Register" element={<Register/>}/>
                 <Route path="/Account/Login" element={<Login/>}/>
                 <Route path="/Tune/Home" element={<Home/>}/>
