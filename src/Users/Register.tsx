@@ -2,9 +2,11 @@ import React, {useState} from "react";
 import {useNavigate, Link} from "react-router-dom";
 
 import * as userClient from "./client";
+import {useDispatch} from "react-redux";
+import {setUser} from "./reducer";
 
 export default function Register() {
-  const [user, setUser] = useState({
+  const [newUser, setNewUser] = useState({
     username: "",
     password: "",
     firstName: "",
@@ -13,9 +15,12 @@ export default function Register() {
   });
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+
   const register = async () => {
     try {
-      const newUser = await userClient.registerUser(user);
+      const u = await userClient.registerUser(newUser);
+      dispatch(setUser(u));
       navigate("/Tune/Home");
     } catch (error: any) {
       console.log(error.response.data);
@@ -28,8 +33,8 @@ export default function Register() {
           <h1>Register</h1>
           <div className="form-floating">
             <input
-                onChange={(e) => setUser({...user, username: e.target.value})}
-                value={user.username}
+                onChange={(e) => setNewUser({...newUser, username: e.target.value})}
+                value={newUser.username}
                 type="text"
                 className="form-control"
                 placeholder="Username"
@@ -39,8 +44,8 @@ export default function Register() {
           </div>
           <div className="form-floating my-1">
             <input
-                onChange={(e) => setUser({...user, password: e.target.value})}
-                value={user.password}
+                onChange={(e) => setNewUser({...newUser, password: e.target.value})}
+                value={newUser.password}
                 type="password"
                 className="form-control"
                 placeholder="Password"
@@ -50,8 +55,8 @@ export default function Register() {
           </div>
           <div className="form-floating my-1">
             <input
-                onChange={(e) => setUser({...user, firstName: e.target.value})}
-                value={user.firstName}
+                onChange={(e) => setNewUser({...newUser, firstName: e.target.value})}
+                value={newUser.firstName}
                 type="text"
                 className="form-control"
                 placeholder="First Name"
@@ -61,8 +66,8 @@ export default function Register() {
           </div>
           <div className="form-floating my-1">
             <input
-                onChange={(e) => setUser({...user, lastName: e.target.value})}
-                value={user.lastName}
+                onChange={(e) => setNewUser({...newUser, lastName: e.target.value})}
+                value={newUser.lastName}
                 type="password"
                 className="form-control"
                 placeholder="Last Name"
@@ -72,8 +77,8 @@ export default function Register() {
           </div>
           <div className="form-floating my-1">
             <input
-                onChange={(e) => setUser({...user, email: e.target.value})}
-                value={user.email}
+                onChange={(e) => setNewUser({...newUser, email: e.target.value})}
+                value={newUser.email}
                 type="email"
                 className="form-control"
                 placeholder="Email"
@@ -85,7 +90,7 @@ export default function Register() {
             Register
           </button>
           <Link to="/Account/Login">
-            <button className="btn btn-primary w-100 py-2">
+            <button className="btn btn-outline-primary w-100 py-2">
               Already have an account? Login!
             </button>
           </Link>

@@ -1,16 +1,19 @@
 import * as client from "./client";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
+import {useDispatch, useSelector} from "react-redux";
+import {UserState} from "../Store";
+import {resetUser} from "./reducer";
 
 export default function Profile() {
-  // TODO: implement Redux
-  const currentUser = { _id: "66243235b36f3bce259d611f"};
+  const currentUser = useSelector((state: UserState) => state.userReducer.user);
   const { uid } = useParams<{ uid: string }>();
   const navigate = useNavigate();
 
   const isCurrentUser = uid === currentUser._id;
-
   const [profile, setProfile] = useState<any>({});
+
+  const dispatch = useDispatch();
 
   const fetchProfile = async (userId: string) => {
     const profile = await client.profile(userId);
@@ -19,6 +22,7 @@ export default function Profile() {
 
   const logOut = async () => {
     await client.logout();
+    dispatch(resetUser());
     navigate("/");
   }
 

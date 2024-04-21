@@ -2,13 +2,20 @@ import React, {useState} from "react";
 import {useNavigate, Link} from "react-router-dom";
 import * as userClient from "./client";
 import "./index.css";
+import {useDispatch} from "react-redux";
+import {setUser} from "./reducer";
 
 export default function Login() {
-  const [user, setUser] = useState({username: "", password: ""});
+  const [credentials, setCredentials] = useState({username: "", password: ""});
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
   const login = async () => {
     try {
-      const newUser = await userClient.loginUser(user);
+      const newUser: any = await userClient.loginUser(credentials);
+      dispatch(setUser(newUser));
+      console.log(newUser);
       navigate("/Tune/Home");
     } catch (error: any) {
       console.log(error.response.data);
@@ -21,8 +28,8 @@ export default function Login() {
           <h1>Login</h1>
           <div className="form-floating">
             <input
-                onChange={(e) => setUser({...user, username: e.target.value})}
-                value={user.username}
+                onChange={(e) => setCredentials({...credentials, username: e.target.value})}
+                value={credentials.username}
                 type="text"
                 className="form-control"
                 placeholder="Username"
@@ -32,8 +39,8 @@ export default function Login() {
           </div>
           <div className="form-floating my-1">
             <input
-                onChange={(e) => setUser({...user, password: e.target.value})}
-                value={user.password}
+                onChange={(e) => setCredentials({...credentials, password: e.target.value})}
+                value={credentials.password}
                 type="password"
                 className="form-control"
                 placeholder="Password"
@@ -45,7 +52,7 @@ export default function Login() {
             Login
           </button>
           <Link to="/Account/Register">
-            <button className="btn btn-primary w-100 py-2">
+            <button className="btn btn-outline-primary w-100 py-2">
               Don't have an account? Register!
             </button>
           </Link>

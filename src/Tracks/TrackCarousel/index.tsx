@@ -2,13 +2,21 @@ import TrackDisplayCard from "../TrackDisplayCard";
 import {useEffect, useState} from "react";
 import * as tuneClient from "../../Tune/client";
 import "./index.css"
+import {useSelector} from "react-redux";
+import {UserState} from "../../Store";
 
 export default function TrackCarousel({tracks, color}: {tracks: any[], color?: string}) {
   const [likedTracks, setLikedTracks] = useState<any[]>([]);
+  const user = useSelector((state: UserState) => state.userReducer.user);
 
   const fetchLikes = async () => {
-    const likes = await tuneClient.areLikedTracks(tracks.map((t: any) => t.id));
-    setLikedTracks(likes);
+    if (user._id !== null) {
+      const likes = await tuneClient.areLikedTracks(tracks.map((t: any) => t.id));
+      setLikedTracks(likes);
+    } else {
+      const likes = tracks.map((t: any) => false);
+      setLikedTracks(likes);
+    }
   }
 
   useEffect(() => {

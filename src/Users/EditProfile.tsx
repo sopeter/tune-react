@@ -5,11 +5,12 @@ import {
   BsEyeFill,
   BsEyeSlashFill
 } from "react-icons/bs"
+import {useSelector} from "react-redux";
+import {UserState} from "../Store";
 
 export default function EditProfile() {
-  // TODO: implement Redux
   const {uid} = useParams<{ uid: string }>();
-  const currentUser = {_id: "66243235b36f3bce259d611f"};
+  const currentUser = useSelector((state: UserState) => state.userReducer.user);
   const navigate = useNavigate();
 
   const [profile, setProfile] = useState<any>({});
@@ -29,7 +30,7 @@ export default function EditProfile() {
 
   useEffect(() => {
     fetchProfile();
-  }, []);
+  });
 
   return (
       <div>
