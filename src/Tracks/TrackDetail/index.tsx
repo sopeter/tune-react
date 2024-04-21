@@ -4,12 +4,15 @@ import * as spotifyClient from "../../Spotify/client";
 import * as tuneClient from "../../Tune/client";
 import * as usersClient from "../../Users/client";
 import {Link, useParams} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {UserState} from "../../Store";
 
 export default function TrackDetail() {
   const [track, setTrack] = useState<any>(null);
   const [isLiked, setIsLiked] = useState(false);
   const [likes, setLikes] = useState<any[]>([]);
   const {trackId} = useParams();
+  const user = useSelector((state: UserState) => state.userReducer.user);
 
   const fetchTrack = async () => {
     const users: any[] = await usersClient.getUsers();
@@ -19,8 +22,12 @@ export default function TrackDetail() {
     }, {});
     const track = await spotifyClient.getTrack(trackId);
     setTrack(track);
-    const liked = await tuneClient.areLikedTracks([track.id]);
-    setIsLiked(liked[0]);
+    if (user._id !== null) {
+      const liked = await tuneClient.areLikedTracks([track.id]);
+      setIsLiked(liked[0]);
+    } else {
+      setIsLiked(false);
+    }
     const trackInfo = await tuneClient.getTrackBySpotifyId(track.id);
     if (trackInfo.length > 0) {
       const trackLikes = trackInfo[0].likedBy;
@@ -30,7 +37,7 @@ export default function TrackDetail() {
 
   useEffect(() => {
     fetchTrack();
-  }, []);
+  });
 
   return (
       <div className="d-flex container py-4">
@@ -60,8 +67,11 @@ export default function TrackDetail() {
                 <ul className="list-group">
                   {likes.map(([uid, username]) => (
                       <li key={uid} className="list-group-item">
-                        <Link className="text-body text-nowrap text-truncate"
-                              to={`/Account/Profile/${uid}`}>{username}</Link>
+                        {user && user._id ?
+                            <Link className="text-body text-nowrap text-truncate"
+                                  to={`/Account/Profile/${uid}`}>{username}</Link> :
+                            username
+                        }
                       </li>
                   ))}
                 </ul>

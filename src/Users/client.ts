@@ -50,16 +50,16 @@ export const loginUser = async (credentials: any) => {
   return response.data;
 };
 
-export const profile = async () => {
+export const profile = async (userId: string) => {
   const response = await axiosWithCredentials.post(
-    `${NODE_API}/api/users/profile`
+    `${NODE_API}/api/users/profile/${userId}`
   );
   return response.data;
 };
 
 export const logout = async () => {
   const response = await axiosWithCredentials.post(
-    `${NODE_API}/api/users/logout`
+    `${NODE_API}/api/users/signOut`
   );
   return response.data;
 };
