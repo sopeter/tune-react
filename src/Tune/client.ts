@@ -95,11 +95,15 @@ export const areLikedTracks = async (trackIds: any[]) => {
 }
 
 export const getLikedPlaylist = async () => {
-  const response = await axiosWithCredentials.get(
-      `${LIKES_API}/likePlaylist`
-  );
-
-  return response.data;
+  try {
+    const response = await axiosWithCredentials.get(
+        `${LIKES_API}/likePlaylist`
+    );
+    return response.data;
+  } catch (e) {
+    console.error(`Could not get Liked Playlist: ${e}`);
+    throw new Error("Error getting playlist of liked songs");
+  }
 }
 
 // Social

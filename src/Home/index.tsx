@@ -30,8 +30,12 @@ export default function Home() {
   const fetchLikedTracksPlaylist = async () => {
     if (user && user._id !== null) {
       setLoading(true);
-      const tracks = await tuneClient.getLikedPlaylist();
-      setTracks(tracks.tracks);
+      try {
+        const tracks = await tuneClient.getLikedPlaylist();
+        setTracks(tracks.tracks);
+      } catch (e) {
+        setTracks([]);
+      }
       setColor('warning');
       setLoading(false);
     }
