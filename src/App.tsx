@@ -12,6 +12,7 @@ import SpotifySearch from "./Spotify/search";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import store from "./Store";
+import AdminPage from "./Tune/Admin";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
                 path="/Account/Profile/Edit/:uid"
                 element={<EditProfile />}
               />
+              <Route path="/Tune/Admin" element={<AdminPage />} />
             </Routes>
           </HashRouter>
         </PersistGate>

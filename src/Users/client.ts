@@ -19,6 +19,13 @@ export const getUsers = async () => {
   return response.data;
 };
 
+export const getUsersByRole = async (role: string) => {
+  const response = await axiosWithCredentials.get(
+      `${NODE_API}/api/users?role=${role}`
+  );
+  return response.data;
+}
+
 export const updateUser = async (user: any) => {
   const response = await axiosWithCredentials.put(
     `${NODE_API}/api/users/${user._id}`,

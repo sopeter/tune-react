@@ -23,6 +23,13 @@ export default function Navigation() {
     {label: 'Profile', location: `/Account/Profile/${currUser._id}`},
   ];
 
+  const adminLinks = [
+    {label: 'Home', location: '/Tune/Home'},
+    {label: 'Admin', location: `/Tune/Admin`},
+    {label: 'Search', location: '/Tune/Track/Search'},
+    {label: 'Profile', location: `/Account/Profile/${currUser._id}`},
+  ];
+
   const unsecureLinks = [
     {label: 'Home', location: '/Tune/Home'},
     {label: 'Search', location: '/Tune/Track/Search'},
@@ -34,7 +41,11 @@ export default function Navigation() {
         <a className="ms-4 navbar-brand text-primary">Tune</a>
         <div>
           <ul className="navbar-nav">
-            {currUser._id !== null ? secureLinks.map((link, i) => (
+            {currUser._id !== null && currUser.role === "ADMIN" ? adminLinks.map((link, i) => (
+                <li key={link.label} className="nav-item">
+                  <Link className="nav-link" to={link.location}>{link.label}</Link>
+                </li>
+            )) : currUser._id !== null ? secureLinks.map((link, i) => (
                 <li key={link.label} className="nav-item">
                   <Link className="nav-link" to={link.location}>{link.label}</Link>
                 </li>

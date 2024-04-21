@@ -7,11 +7,14 @@ import {
 } from "react-icons/bs"
 import {useSelector} from "react-redux";
 import {UserState} from "../Store";
+import {useDispatch} from "react-redux";
+import {setUser} from "./reducer";
 
 export default function EditProfile() {
   const {uid} = useParams<{ uid: string }>();
   const currentUser = useSelector((state: UserState) => state.userReducer.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [profile, setProfile] = useState<any>({});
   const [isPwHidden, setIsPwHidden] = useState(true);
@@ -24,13 +27,14 @@ export default function EditProfile() {
   const isCurrentUser = uid === currentUser._id;
 
   const submitEdit = async () => {
-    await client.updateUser(profile);
+    const u = await client.updateUser(profile);
+    dispatch(setUser(u));
     navigate(`/Account/Profile/${uid}`)
   }
 
   useEffect(() => {
     fetchProfile();
-  });
+  }, []);
 
   return (
       <div>
@@ -95,6 +99,7 @@ export default function EditProfile() {
                 <select
                     className="form-control"
                     id="profile-role-form"
+                    value={profile.role}
                     onChange={(e) => setProfile({...profile, role: e.target.value})}
                 >
                   <option value="USER">User</option>
