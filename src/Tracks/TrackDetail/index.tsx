@@ -22,7 +22,7 @@ export default function TrackDetail() {
     }, {});
     const track = await spotifyClient.getTrack(trackId);
     setTrack(track);
-    if (user._id !== null) {
+    if (user && user._id !== null) {
       const liked = await tuneClient.areLikedTracks([track.id]);
       setIsLiked(liked[0]);
     } else {

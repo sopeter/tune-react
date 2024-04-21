@@ -19,13 +19,13 @@ export default function Navigation() {
 
   const secureLinks = [
     {label: 'Home', location: '/Tune/Home'},
-    {label: 'Search', location: '/Tune/Search'},
+    {label: 'Search', location: '/Tune/Track/Search'},
     {label: 'Profile', location: `/Account/Profile/${currUser._id}`},
   ];
 
   const unsecureLinks = [
     {label: 'Home', location: '/Tune/Home'},
-    {label: 'Search', location: '/Tune/Search'},
+    {label: 'Search', location: '/Tune/Track/Search'},
     {label: 'Login', location: '/Account/Login'},
   ];
 
