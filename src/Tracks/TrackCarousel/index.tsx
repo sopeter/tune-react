@@ -10,7 +10,7 @@ export default function TrackCarousel({tracks, color}: {tracks: any[], color?: s
   const user = useSelector((state: UserState) => state.userReducer.user);
 
   const fetchLikes = async () => {
-    if (user._id !== null) {
+    if (user && user._id !== null) {
       const likes = await tuneClient.areLikedTracks(tracks.map((t: any) => t.id));
       setLikedTracks(likes);
     } else {

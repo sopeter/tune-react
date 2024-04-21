@@ -28,11 +28,13 @@ export default function Home() {
   }
 
   const fetchLikedTracksPlaylist = async () => {
-    setLoading(true);
-    const tracks = await tuneClient.getLikedPlaylist();
-    setTracks(tracks.tracks);
-    setColor('warning');
-    setLoading(false);
+    if (user && user._id !== null) {
+      setLoading(true);
+      const tracks = await tuneClient.getLikedPlaylist();
+      setTracks(tracks.tracks);
+      setColor('warning');
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
