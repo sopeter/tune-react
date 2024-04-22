@@ -26,7 +26,7 @@ export default function ProfileDataTable(type: string, data: Array<string>) {
           <thead>
           <tr>
             <td>
-              <strong>{title} ID</strong>
+              <strong>{title}</strong>
             </td>
           </tr>
           </thead>

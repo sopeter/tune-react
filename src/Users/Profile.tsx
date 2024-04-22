@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {UserState} from "../Store";
 import {resetUser} from "./reducer";
 import ProfileDataTable from "./ProfileDataTable";
+import * as tuneClient from "../Tune/client";
 
 export default function Profile() {
   const currentUser = useSelector((state: UserState) => state.userReducer.user);
@@ -13,15 +14,18 @@ export default function Profile() {
 
   const isCurrentUser = uid === currentUser._id;
   const [profile, setProfile] = useState<any>({});
-  const [tableType, setTableType] = useState("tracks");
+  const [tableType, setTableType] = useState("");
   const [tableData, setTableData] = useState([]);
+  const [isFollowing, setIsFollowing] = useState(false);
 
   const dispatch = useDispatch();
 
   const fetchProfile = async (userId: string) => {
     const profile = await client.profile(userId);
     setProfile(profile);
-    setTableData(profile.likedTracks)
+    if (profile && profile.followers) {
+      setIsFollowing(profile.followers.includes(currentUser._id));
+    }
   };
 
   const logOut = async () => {
@@ -32,9 +36,23 @@ export default function Profile() {
 
   useEffect(() => {
     if (uid) {
+      setTableType("");
+      setTableData([]);
       fetchProfile(uid);
     }
   }, [uid]);
+
+  const followProfile = async () => {
+    await tuneClient.followUser(uid);
+    setIsFollowing(true);
+    fetchProfile(uid!);
+  }
+
+  const unfollowProfile = async () => {
+    await tuneClient.unfollowUser(uid);
+    setIsFollowing(false);
+    fetchProfile(uid!);
+  }
 
   return (
       <div>
@@ -79,6 +97,15 @@ export default function Profile() {
                 </button>
               </div>
             </div>
+            {!isCurrentUser && (
+                <button
+                    className="btn btn-primary mt-2"
+                    onClick={isFollowing ?
+                        unfollowProfile :
+                        followProfile}>
+                  {isFollowing ? 'Unfollow' : 'Follow'}
+                </button>
+            )}
             <div className="mt-4">
               {
                 ProfileDataTable(tableType, tableData)
